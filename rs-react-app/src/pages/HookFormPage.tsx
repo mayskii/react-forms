@@ -1,3 +1,10 @@
+import HookForm from '../components/HookForm';
+
 export default function HookFormPage() {
-  return <h1>Hook Form Page</h1>;
+  return (
+    <div>
+      <h1>React Hook Form</h1>
+      <HookForm />
+    </div>
+  );
 }
