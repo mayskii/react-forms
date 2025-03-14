@@ -10,6 +10,9 @@ interface FormData {
   age: number;
   email: string;
   password: string;
+  gender: 'male' | 'female';
+  country: string;
+  image?: string | null | undefined;
 }
 
 export default function HookForm() {
@@ -17,6 +20,7 @@ export default function HookForm() {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm<FormData>({
     resolver: yupResolver(validationSchema),
   });
@@ -25,10 +29,21 @@ export default function HookForm() {
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
-    dispatch(
-      addFormData({ ...data, password: '', image: '', gender: '', country: '' })
-    );
+    dispatch(addFormData(data));
     navigate('/');
+  };
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        if (reader.result && typeof reader.result === 'string') {
+          setValue('image', reader.result);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   return (
@@ -52,6 +67,20 @@ export default function HookForm() {
         placeholder="Email"
       />
       {errors.email && <p>{errors.email.message}</p>}
+
+      <input
+        {...register('password', { required: 'Password is required' })}
+        type="password"
+        placeholder="Password"
+      />
+      {errors.password && <p>{errors.password.message}</p>}
+
+      <input
+        type="file"
+        accept="image/png, image/jpeg"
+        onChange={handleImageUpload}
+      />
+      {errors.image && <p>{errors.image.message}</p>}
 
       <button type="submit">Submit</button>
     </form>

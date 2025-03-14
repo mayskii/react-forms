@@ -6,7 +6,7 @@ interface FormData {
   email: string;
   password: string;
   gender: string;
-  image: string;
+  image?: string | null | undefined;
   country: string;
 }
 
