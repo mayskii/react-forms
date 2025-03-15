@@ -23,10 +23,11 @@ export default function HookForm() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
     setValue,
   } = useForm<FormData>({
     resolver: yupResolver(validationSchema),
+    mode: 'all',
   });
 
   const dispatch = useDispatch();
@@ -125,7 +126,9 @@ export default function HookForm() {
       </label>
       {errors.agreement && <p>{errors.agreement.message}</p>}
 
-      <button type="submit">Submit</button>
+      <button type="submit" disabled={!isValid}>
+        Submit
+      </button>
     </form>
   );
 }

@@ -6,7 +6,11 @@ export const validationSchema = yup.object().shape({
     .matches(/^[A-Z]/, 'First letter must be uppercase')
     .required('Name is required'),
 
-  age: yup.number().min(0, 'Age must be positive').required('Age is required'),
+  age: yup
+    .number()
+    .min(1, 'Age must be a positive number')
+    .max(140, 'Age must be less than or equal to 140')
+    .required('Age is required'),
 
   email: yup.string().email('Invalid email').required('Email is required'),
 

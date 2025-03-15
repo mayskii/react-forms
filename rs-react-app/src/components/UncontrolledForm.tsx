@@ -51,8 +51,8 @@ export default function UncontrolledForm() {
       setError('Name must start with an uppercase letter');
       return;
     }
-    if (age <= 0) {
-      setError('Age must be a positive number');
+    if (age <= 0 || age > 140) {
+      setError('Age must be a positive number greater 0 and less 140');
       return;
     }
     if (!email.match(/^\S+@\S+\.\S+$/)) {
