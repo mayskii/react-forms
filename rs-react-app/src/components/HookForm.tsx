@@ -89,6 +89,13 @@ export default function HookForm() {
       />
       {errors.confirmPassword && <p>{errors.confirmPassword.message}</p>}
 
+      <select {...register('gender', { required: 'Gender is required' })}>
+        <option value="">Select Gender</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+      </select>
+      {errors.gender && <p>{errors.gender.message}</p>}
+
       <select {...register('country', { required: 'Country is required' })}>
         <option value="">Select a country</option>
         {countries.map((country, index) => (

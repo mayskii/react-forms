@@ -10,7 +10,7 @@ export default function MainPage() {
       <h1>Main page</h1>
 
       <nav>
-        <Link to="/uncontrolled-form">Uncontrolled Form</Link> | ;
+        <Link to="/uncontrolled-form">Uncontrolled Form</Link>
         <Link to="/hook-form">Hook Form</Link>
       </nav>
 
@@ -28,6 +28,29 @@ export default function MainPage() {
               </p>
               <p>
                 <strong>Email:</strong> {data.email}
+              </p>
+              <p>
+                <strong>Password:</strong> {data.password}
+              </p>
+              <p>
+                <strong>Gender:</strong> {data.gender}
+              </p>
+              <p>
+                <strong>Country:</strong> {data.country}
+              </p>
+              {data.image && (
+                <div>
+                  <strong>Image:</strong>
+                  <img
+                    src={data.image}
+                    alt="uploaded"
+                    style={{ maxWidth: '100px', marginTop: '10px' }}
+                  />
+                </div>
+              )}
+              <p>
+                <strong>Agreement Accepted:</strong>{' '}
+                {data.agreement ? 'Yes' : 'No'}
               </p>
             </div>
           ))

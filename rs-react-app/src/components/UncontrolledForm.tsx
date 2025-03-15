@@ -129,8 +129,8 @@ export default function UncontrolledForm() {
       />
 
       <label htmlFor="agreement">
-        <input id="agreement" type="checkbox" ref={agreementRef} /> Accept Terms
-        & Conditions
+        Accept Terms & Conditions
+        <input id="agreement" type="checkbox" ref={agreementRef} />
       </label>
 
       {error && <p style={{ color: 'red' }}>{error}</p>}
