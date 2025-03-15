@@ -12,9 +12,13 @@ interface FormData {
 
 interface FormsState {
   data: FormData[];
+  countries: string[];
 }
 
-const initialState: FormsState = { data: [] };
+const initialState: FormsState = {
+  data: [],
+  countries: ['USA', 'Canada', 'Germany', 'France', 'UK', 'Japan'],
+};
 
 const formsSlice = createSlice({
   name: 'forms',
@@ -23,8 +27,11 @@ const formsSlice = createSlice({
     addFormData: (state, action: PayloadAction<FormData>) => {
       state.data.push(action.payload);
     },
+    setCountries: (state, action: PayloadAction<string[]>) => {
+      state.countries = action.payload;
+    },
   },
 });
 
-export const { addFormData } = formsSlice.actions;
+export const { addFormData, setCountries } = formsSlice.actions;
 export default formsSlice.reducer;
