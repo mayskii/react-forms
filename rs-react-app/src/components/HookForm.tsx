@@ -1,18 +1,22 @@
+import React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addFormData } from '../store/formSlice';
 import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { validationSchema } from '../validationSchema';
+import { RootState } from '../store';
 
 interface FormData {
   name: string;
   age: number;
   email: string;
   password: string;
+  confirmPassword: string;
   gender: 'male' | 'female';
   country: string;
   image?: string | null | undefined;
+  agreement: boolean;
 }
 
 export default function HookForm() {
@@ -27,6 +31,7 @@ export default function HookForm() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const countries = useSelector((state: RootState) => state.forms.countries);
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
     dispatch(addFormData(data));
@@ -76,11 +81,42 @@ export default function HookForm() {
       {errors.password && <p>{errors.password.message}</p>}
 
       <input
+        {...register('confirmPassword', {
+          required: 'Confirm Password is required',
+        })}
+        type="password"
+        placeholder="Confirm Password"
+      />
+      {errors.confirmPassword && <p>{errors.confirmPassword.message}</p>}
+
+      <select {...register('country', { required: 'Country is required' })}>
+        <option value="">Select a country</option>
+        {countries.map((country, index) => (
+          <option key={index} value={country}>
+            {country}
+          </option>
+        ))}
+      </select>
+
+      {errors.country && <p>{errors.country.message}</p>}
+
+      <input
         type="file"
         accept="image/png, image/jpeg"
         onChange={handleImageUpload}
       />
       {errors.image && <p>{errors.image.message}</p>}
+
+      <label>
+        <input
+          {...register('agreement', {
+            required: 'You must accept the terms and conditions',
+          })}
+          type="checkbox"
+        />
+        Accept terms and conditions
+      </label>
+      {errors.agreement && <p>{errors.agreement.message}</p>}
 
       <button type="submit">Submit</button>
     </form>

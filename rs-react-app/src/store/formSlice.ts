@@ -8,6 +8,7 @@ interface FormData {
   gender: string;
   image?: string | null | undefined;
   country: string;
+  agreement: boolean;
 }
 
 interface FormsState {

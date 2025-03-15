@@ -16,6 +16,10 @@ export const validationSchema = yup.object().shape({
     .matches(/[0-9]/, 'Must contain at least one number')
     .matches(/[\W_]/, 'Must contain at least one special character')
     .required('Password is required'),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref('password')], 'Passwords do not match')
+    .required('Confirm Password is required'),
   gender: yup
     .string()
     .oneOf(['male', 'female'], 'Gender is required')
@@ -26,16 +30,23 @@ export const validationSchema = yup.object().shape({
     .nullable()
     .test('fileSize', 'File is too large', (value) => {
       if (value && typeof value === 'string') {
-        return value.length <= 5000000;
+        const matches = value.match(/^data:(image\/(jpeg|png));base64,/);
+        if (matches && matches[0]) {
+          const base64String = value.split(',')[1];
+          const size = Math.round((base64String.length * (3 / 4)) / 1024);
+          return size <= 5000;
+        }
       }
-      return true;
     })
     .test('fileExtension', 'Unsupported file extension', (value) => {
       if (value && typeof value === 'string') {
-        const fileExtension = value.split(';')[0].split('/')[1];
-        const allowedExtensions = ['png', 'jpeg', 'jpg'];
-        return allowedExtensions.includes(fileExtension);
+        const matches = value.match(/^data:(image\/(jpeg|png));base64,/);
+        return !!matches;
       }
       return false;
     }),
+  agreement: yup
+    .boolean()
+    .oneOf([true], 'You must accept the terms and conditions')
+    .required(),
 });

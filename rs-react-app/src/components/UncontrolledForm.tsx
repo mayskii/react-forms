@@ -77,6 +77,7 @@ export default function UncontrolledForm() {
         gender,
         country,
         image: imageBase64,
+        agreement,
       })
     );
 
@@ -85,16 +86,10 @@ export default function UncontrolledForm() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <label htmlFor="name">Name:</label>
       <input id="name" type="text" placeholder="Name" ref={nameRef} />
-
-      <label htmlFor="age">Age:</label>
       <input id="age" type="number" placeholder="Age" ref={ageRef} />
-
-      <label htmlFor="email">Email:</label>
       <input id="email" type="email" placeholder="Email" ref={emailRef} />
 
-      <label htmlFor="password">Password:</label>
       <input
         id="password"
         type="password"
@@ -102,7 +97,6 @@ export default function UncontrolledForm() {
         ref={passwordRef}
       />
 
-      <label htmlFor="confirmPassword">Confirm Password:</label>
       <input
         id="confirmPassword"
         type="password"
@@ -110,14 +104,12 @@ export default function UncontrolledForm() {
         ref={confirmPasswordRef}
       />
 
-      <label htmlFor="gender">Gender:</label>
       <select id="gender" ref={genderRef}>
         <option value="">Select Gender</option>
         <option value="male">Male</option>
         <option value="female">Female</option>
       </select>
 
-      <label htmlFor="country">Country:</label>
       <select id="country" ref={countryRef}>
         <option value="">Select Country</option>
         {countries.map((c) => (
