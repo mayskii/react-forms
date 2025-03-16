@@ -64,6 +64,8 @@ export default function UncontrolledForm() {
     const country = countryRef.current?.value || '';
     const agreement = agreementRef.current?.checked || false;
 
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+
     if (!name.match(/^[A-ZА-Я][a-zа-я]*$/)) {
       setError('Name must start with an uppercase letter');
       return;
@@ -72,14 +74,44 @@ export default function UncontrolledForm() {
       setError('Age must be a positive number greater 0 and less 140');
       return;
     }
+
+    if (!email) {
+      setError('Email is required');
+      return;
+    }
+
     if (!email.match(/^\S+@\S+\.\S+$/)) {
       setError('Invalid email format');
       return;
     }
+
+    if (!password) {
+      setError('Password is required');
+      return;
+    }
+
+    if (!passwordRegex.test(password)) {
+      setError(
+        'Password must be at least 8 characters long, include at least one uppercase letter, one lowercase letter, one number, and one special character'
+      );
+      return;
+    }
+
     if (password !== confirmPassword) {
       setError('Passwords do not match');
       return;
     }
+
+    if (!gender) {
+      setError('Gender is required');
+      return;
+    }
+
+    if (!country) {
+      setError('Country is required');
+      return;
+    }
+
     if (!agreement) {
       setError('You must accept the terms and conditions');
       return;
