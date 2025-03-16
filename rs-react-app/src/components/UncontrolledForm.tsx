@@ -21,6 +21,23 @@ export default function UncontrolledForm() {
 
   const [imageBase64, setImageBase64] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [updatedFields, setUpdatedFields] = useState<{
+    [key: string]: boolean;
+  }>({});
+
+  const handleFieldChange = (field: string) => {
+    setUpdatedFields((prevState) => ({
+      ...prevState,
+      [field]: true,
+    }));
+
+    setTimeout(() => {
+      setUpdatedFields((prevState) => ({
+        ...prevState,
+        [field]: false,
+      }));
+    }, 3000);
+  };
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -86,15 +103,39 @@ export default function UncontrolledForm() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <input id="name" type="text" placeholder="Name" ref={nameRef} />
-      <input id="age" type="number" placeholder="Age" ref={ageRef} />
-      <input id="email" type="email" placeholder="Email" ref={emailRef} />
+      <input
+        id="name"
+        type="text"
+        placeholder="Name"
+        ref={nameRef}
+        onChange={() => handleFieldChange('name')}
+        className={`${updatedFields.name ? 'updated-field' : ''}`}
+      />
+
+      <input
+        id="age"
+        type="number"
+        placeholder="Age"
+        ref={ageRef}
+        onChange={() => handleFieldChange('age')}
+        className={`${updatedFields.age ? 'updated-field' : ''}`}
+      />
+      <input
+        id="email"
+        type="email"
+        placeholder="Email"
+        ref={emailRef}
+        onChange={() => handleFieldChange('email')}
+        className={`${updatedFields.email ? 'updated-field' : ''}`}
+      />
 
       <input
         id="password"
         type="password"
         placeholder="Password"
         ref={passwordRef}
+        onChange={() => handleFieldChange('password')}
+        className={`${updatedFields.password ? 'updated-field' : ''}`}
       />
 
       <input
@@ -102,15 +143,27 @@ export default function UncontrolledForm() {
         type="password"
         placeholder="Confirm Password"
         ref={confirmPasswordRef}
+        onChange={() => handleFieldChange('confirmPassword')}
+        className={`${updatedFields.confirmPassword ? 'updated-field' : ''}`}
       />
 
-      <select id="gender" ref={genderRef}>
+      <select
+        id="gender"
+        ref={genderRef}
+        onChange={() => handleFieldChange('gender')}
+        className={`${updatedFields.gender ? 'updated-field' : ''}`}
+      >
         <option value="">Select Gender</option>
         <option value="male">Male</option>
         <option value="female">Female</option>
       </select>
 
-      <select id="country" ref={countryRef}>
+      <select
+        id="country"
+        ref={countryRef}
+        onChange={() => handleFieldChange('country')}
+        className={`${updatedFields.country ? 'updated-field' : ''}`}
+      >
         <option value="">Select Country</option>
         {countries.map((c) => (
           <option key={c} value={c}>
@@ -126,11 +179,18 @@ export default function UncontrolledForm() {
         accept="image/png, image/jpeg"
         ref={fileInputRef}
         onChange={handleImageUpload}
+        className={`${updatedFields.image ? 'updated-field' : ''}`}
       />
 
       <label htmlFor="agreement">
         Accept Terms & Conditions
-        <input id="agreement" type="checkbox" ref={agreementRef} />
+        <input
+          id="agreement"
+          type="checkbox"
+          ref={agreementRef}
+          onChange={() => handleFieldChange('agreement')}
+          className={`${updatedFields.agreement ? 'updated-field' : ''}`}
+        />
       </label>
 
       {error && <p style={{ color: 'red' }}>{error}</p>}

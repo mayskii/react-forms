@@ -8,7 +8,7 @@ export const validationSchema = yup.object().shape({
 
   age: yup
     .number()
-    .min(1, 'Age must be a positive number')
+    .min(1, 'Age must be a positive number greater 0')
     .max(140, 'Age must be less than or equal to 140')
     .required('Age is required'),
 
